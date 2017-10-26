@@ -7,7 +7,6 @@ export default class extends Body {
 
     this.maxSpeed = 300
     this.fireRate = 200
-    this.nextTimeShot = 0
     console.log(`PlayerId: ${id}`)
 
     game.camera.follow(this)
@@ -37,6 +36,7 @@ export default class extends Body {
     //  Fix the position of the bullets to create from the gun
     this.weapon.bullets.setAll('anchor.x', -6)
     this.weapon.bullets.setAll('anchor.y', 0)
+    this.weapon.onFire.add(this.newShot, this)
   }
 
   update () {
@@ -73,15 +73,10 @@ export default class extends Body {
       this.torso.frame = 0
       this.weapon.fireAngle = this.torso.angle - 90
       this.weapon.fire()
-      this.torso.bringToTop()
-      if(this.game.time.now > this.nextTimeShot){
-        this.nextTimeShot = this.game.time.now + this.fireRate
-        this.newShot()
-      }
     }
   }
 
   newShot(){
-    //this.shootingSound.play()
+    this.shootingSound.play()
   }
 }
