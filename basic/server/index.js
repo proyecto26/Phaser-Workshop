@@ -15,6 +15,10 @@ var Player = require('./socket/player')
 io.on('connection', (socket) => {
 
   const player = new Player(socket)
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('enemy.disconnect', socket.id)
+    socket.emit('player.disconnect')
+  })
 })
 
 server.listen(process.env.PORT || 8081, () => {

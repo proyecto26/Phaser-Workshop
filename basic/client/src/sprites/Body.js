@@ -12,7 +12,6 @@ export default class extends Phaser.Sprite {
     game.add.existing(this)
     this.anchor.set(0.5)
     game.physics.arcade.enable(this)
-    this.body.collideWorldBounds = true
 
     /**
      * Create the legs of the player
@@ -35,7 +34,10 @@ export default class extends Phaser.Sprite {
 
     this.body.setCircle(this.legs.height/4, -this.legs.width/10, -this.legs.height/10)
 
-    //this.body.allowRotation = false
+    this.legs.collideWorldBounds = true
+    this.torso.collideWorldBounds = true
+    this.body.collideWorldBounds = true
+    this.body.allowRotation = false
   }
 
   update(){

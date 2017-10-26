@@ -28,9 +28,14 @@ export default class extends Phaser.State {
   create () {
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
+    this.game.physics.arcade.checkCollision.down = true
+
     let level = this.add.image(0, 0, 'level1')
-    level.scale.set(0.8)
-    this.game.world.setBounds(0, 0, level.width, level.height-50)
+    /**
+     * We can get data from the cache
+     */
+    let cacheImage = this.game.cache.getImage('level1')
+    this.game.world.setBounds(0, 0, 3840, 1600)
 
     this.banner = new Banner({ 
       game: this.game, 
@@ -52,7 +57,6 @@ export default class extends Phaser.State {
 
   update () {
     if(!this.player) return
-
     this.game.physics.arcade.collide(this.player, this.enemies)
 
     var currentPlayerPosition = {
@@ -100,13 +104,11 @@ export default class extends Phaser.State {
       enemy.legs.angle = legsAngle
       enemy.legs.frame = legsFrame
       enemy.torso.frame = torsoFrame
-      console.log(`player: ${this.player.id}, enemy: ${id}`)
     }
   }
 
   destroyPlayer (){
     this.player.destroy()
-    alert('Ohh no, you are disconnected!')
   }
 
   destroyEnemy (playerId){

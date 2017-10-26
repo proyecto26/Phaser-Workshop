@@ -5,7 +5,6 @@ module.exports = class {
         this.socket = socket
         socket.on('player.newPlayer', this.newPlayer.bind(this))
         socket.on('player.movement', this.movement.bind(this))
-        socket.on('disconnect', this.disconnect.bind(this))
     }
 
     newPlayer (username) {
@@ -45,10 +44,5 @@ module.exports = class {
             return !!socketEnemy.player && key != this.socket.id
         }), (socketEnemy) => socketEnemy.player)
         return enemies
-    }
-
-    disconnect (){
-        this.socket.broadcast.emit('enemy.disconnect', this.socket.id)
-        this.socket.emit('player.disconnect')
     }
 }

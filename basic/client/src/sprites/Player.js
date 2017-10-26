@@ -6,8 +6,8 @@ export default class extends Body {
     super({ game, x, y, asset, id })
 
     this.maxSpeed = 300
-    this.shootingRate = 200
-    this.lastTimeShot = 0
+    this.fireRate = 200
+    this.nextTimeShot = 0
     console.log(`PlayerId: ${id}`)
 
     game.camera.follow(this)
@@ -25,6 +25,18 @@ export default class extends Body {
     }
 
     this.shootingSound = game.add.audio('shoot')
+    //  Creates 30 bullets, using the 'bullet' graphic
+    this.weapon = game.add.weapon(30, 'bullet')
+    //  The bullet will be automatically killed when it leaves the world bounds
+    this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS
+    //  The speed at which the bullet is fired
+    this.weapon.bulletSpeed = 600
+    //  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+    this.weapon.fireRate = this.fireRate
+    this.weapon.trackSprite(this.torso, 0, 0, false)
+    //  Fix the position of the bullets to create from the gun
+    this.weapon.bullets.setAll('anchor.x', -6)
+    this.weapon.bullets.setAll('anchor.y', 0)
   }
 
   update () {
@@ -59,14 +71,17 @@ export default class extends Body {
     if(this.spaceButton.isDown){
       this.torso.animations.stop()
       this.torso.frame = 0
-      if(this.game.time.now > this.lastTimeShot){
-        this.lastTimeShot = this.game.time.now + this.shootingRate
+      this.weapon.fireAngle = this.torso.angle - 90
+      this.weapon.fire()
+      this.torso.bringToTop()
+      if(this.game.time.now > this.nextTimeShot){
+        this.nextTimeShot = this.game.time.now + this.fireRate
         this.newShot()
       }
     }
   }
 
   newShot(){
-    this.shootingSound.play()
+    //this.shootingSound.play()
   }
 }
