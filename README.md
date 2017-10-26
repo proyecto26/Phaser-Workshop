@@ -33,6 +33,6 @@ A workshop to create beautiful games with **Phaser Framework**.
    ```
 
 ## Credits
-- http://phaser.io/sandbox/UuTkxwqm/play
+- **[Joe P](https://twitter.com/jmp909):** http://phaser.io/sandbox/UuTkxwqm/play
 - **[Jerome Renaux](https://github.com/Jerenaux):** https://github.com/Jerenaux/basic-mmo-phaser
-- **[Tom Van Schoor](https://github.com/TVScoundrel/mmo-phaser-es6)**
+- **[Tom Van Schoor](https://github.com/TVScoundrel):** https://github.com/TVScoundrel/mmo-phaser-es6
