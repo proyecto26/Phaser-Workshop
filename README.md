@@ -20,8 +20,17 @@ A workshop to create beautiful games with **Phaser Framework**.
 - **Lag Compensation:**
   The clients simulate while the server rewinds the simulation and then sends out the confirmation message to the clients.
 
-   #### Intructions
-   - 
+   #### Intructions to run the projects
+   - **Client side:**
+   ```
+   cd basic/client
+   npm start
+   ```
+   - **Server side:**
+   ```
+   cd basic/server
+   npm start
+   ```
 
 ## Credits
 - http://phaser.io/sandbox/UuTkxwqm/play
