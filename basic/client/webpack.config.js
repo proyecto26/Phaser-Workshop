@@ -20,12 +20,12 @@ module.exports = {
       'babel-polyfill',
       path.resolve(__dirname, 'src/main.js')
     ],
-    vendor: ['pixi', 'p2', 'phaser-ce', 'webfontloader']
+    vendor: ['webfontloader']
   },
   devtool: 'cheap-source-map',
   output: {
     pathinfo: true,
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'www/dist'),
     publicPath: './dist/',
     filename: 'bundle.js'
   },
@@ -34,7 +34,7 @@ module.exports = {
     definePlugin,
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.bundle.js'/* filename= */}),
     new HtmlWebpackPlugin({
-      filename: '../index.html',
+      filename: path.resolve(__dirname, 'www/index.html'),
       template: './src/index.html',
       chunks: ['vendor', 'app'],
       chunksSortMode: 'manual',
@@ -54,7 +54,7 @@ module.exports = {
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
       server: {
-        baseDir: ['./', './build']
+        baseDir: ['./www', './build']
       }
     }),
     new LodashModuleReplacementPlugin

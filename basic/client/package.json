@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "webpack",
     "deploy": "webpack --config webpack.production.config.js",
-    "cordova": "webpack --config webpack.cordova.config.js",
     "test": "eslint ./src/**/**.js",
     "start": "npm run dev"
   },
