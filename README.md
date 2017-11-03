@@ -1,5 +1,5 @@
 # Phaser-Workshop
-A workshop to create beautiful games with **Phaser Framework**.
+A workshop to create beautiful games with **Phaser Framework** 🎮
 
 ![Phaser Real-time games!](img/realtime-games.jpg)
 
@@ -43,3 +43,8 @@ A workshop to create beautiful games with **Phaser Framework**.
 - **[Joe P](https://twitter.com/jmp909):** http://phaser.io/sandbox/UuTkxwqm/play
 - **[Jerome Renaux](https://github.com/Jerenaux):** https://github.com/Jerenaux/basic-mmo-phaser
 - **[Tom Van Schoor](https://github.com/TVScoundrel):** https://github.com/TVScoundrel/mmo-phaser-es6
+
+## Happy coding 💯
+Made with ❤️
+
+<img width="150px" src="http://phaser.azurewebsites.net/assets/nicholls.png" align="right">
