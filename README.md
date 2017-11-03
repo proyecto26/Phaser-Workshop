@@ -15,7 +15,7 @@ A workshop to create beautiful games with **Phaser Framework**.
 - [Fast-Paced Multiplayer](http://www.gabrielgambetta.com/client-server-game-architecture.html)
 
 ## Path Finding and Isometric worlds
-`git clone -b client-server https://github.com/proyecto26/Phaser-Workshop.git`
+`git clone -b isometric https://github.com/proyecto26/Phaser-Workshop.git`
 
 ## Real-time games
 - **Client prediction:**
