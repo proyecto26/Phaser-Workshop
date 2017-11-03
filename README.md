@@ -14,9 +14,8 @@ A workshop to create beautiful games with **Phaser Framework**.
 - [Interest management for multiplayer online games](http://www.dynetisgames.com/2017/04/05/interest-management-mog/)
 - [Fast-Paced Multiplayer](http://www.gabrielgambetta.com/client-server-game-architecture.html)
 
-## Path Finding
-
-## Isometric worlds
+## Path Finding and Isometric worlds
+`git clone -b client-server https://github.com/proyecto26/Phaser-Workshop.git`
 
 ## Real-time games
 - **Client prediction:**
