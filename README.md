@@ -8,6 +8,12 @@ A workshop to create beautiful games with **Phaser Framework**.
 - [Node.js basics](http://slides.com/juandavidnicholls/node-js#/)
 - [Phaser Webpack template](https://github.com/lean/phaser-es6-webpack)
 
+## Resources
+- [How to make a multiplayer online game with Phaser, Socket.io and Node.js](http://www.dynetisgames.com/2017/03/06/how-to-make-a-multiplayer-online-game-with-phaser-socket-io-and-node-js/)
+- [Multiplayer space-shooter game](https://github.com/code0wl/Multiplayer-Phaser-game)
+- [Interest management for multiplayer online games](http://www.dynetisgames.com/2017/04/05/interest-management-mog/)
+- [Fast-Paced Multiplayer](http://www.gabrielgambetta.com/client-server-game-architecture.html)
+
 ## Path Finding
 
 ## Isometric worlds
