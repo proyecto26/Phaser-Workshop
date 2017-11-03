@@ -21,10 +21,9 @@ A workshop to create beautiful games with **Phaser Framework**.
 ## Real-time games
 - **Client prediction:**
   Inputs will be collected and sent to the server, and states (positions, frames, etc) can be updated while waiting for the messages to come back from the server.
-- **Client interpolation**
   
 - **Lag Compensation:**
-  The clients simulate while the server rewinds the simulation and then sends out the confirmation message to the clients.
+  The clients simulate (Interpolation) while the server rewinds the simulation and then sends out the confirmation message to the clients.
 
    #### Intructions to run the projects
    - **Client side:**
@@ -37,6 +36,9 @@ A workshop to create beautiful games with **Phaser Framework**.
    cd basic/server
    npm start
    ```
+   
+## First step
+- Clone the first example `git clone -b client-server https://github.com/proyecto26/Phaser-Workshop.git`
 
 ## Credits
 - **[Joe P](https://twitter.com/jmp909):** http://phaser.io/sandbox/UuTkxwqm/play
