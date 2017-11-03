@@ -13,5 +13,8 @@ cd basic/server
 npm start
 ```
 
+## Next step
+- Clone the next example `git clone -b server-client https://github.com/proyecto26/Phaser-Workshop.git`
+
 ## Happy coding 💯
 Made with ❤️
