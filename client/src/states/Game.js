@@ -6,7 +6,9 @@ import _ from 'lodash'
 
 import Player from '../sprites/Player'
 import Enemy  from '../sprites/Enemy'
+import Weapon from '../sprites/Weapon'
 import Banner from '../texts/Banner'
+import Hud    from '../addons/Hud'
 
 export default class extends Phaser.State {
   init () {
@@ -15,10 +17,7 @@ export default class extends Phaser.State {
     this.socket.on('player.created', this.playerCreated.bind(this))
     this.socket.on('player.enemyCreated', this.createEnemy.bind(this))
     this.socket.on('player.disconnect', this.destroyPlayer.bind(this))
-    this.socket.on('enemy.disconnect', this.destroyEnemy.bind(this))
-    this.socket.on('enemy.position', this.updateEnemy.bind(this))
-    this.lastTimeSocketCaptured = 0
-    this.socketDelay = 1/60
+    this.socket.on('game.state', this.updateGame.bind(this))
   }
   /**
    * Load dynamic assets per level
@@ -26,7 +25,6 @@ export default class extends Phaser.State {
   preload () {}
 
   create () {
-
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
     this.game.physics.arcade.checkCollision.down = true
 
@@ -35,7 +33,7 @@ export default class extends Phaser.State {
      * We can get data from the cache
      */
     let cacheImage = this.game.cache.getImage('level1')
-    this.game.world.setBounds(0, 0, 3840, 1600)
+    this.game.world.setBounds(0, 0, cacheImage.width, cacheImage.height)
 
     this.banner = new Banner({ 
       game: this.game, 
@@ -51,27 +49,33 @@ export default class extends Phaser.State {
     this.music = this.game.add.audio('music')
     this.music.loop = true
     //this.music.play()
+    this.shootingSound = this.game.add.audio('shoot')
+    this.spaceButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
 
-    this.playerLastPosition = {}
+    this.hud = new Hud(this.game)
   }
 
   update () {
     if(!this.player) return
     this.game.physics.arcade.collide(this.player, this.enemies)
 
-    var currentPlayerPosition = {
-      x: this.player.x,
-      y: this.player.y,
-      legsAngle: this.player.legs.angle,
-      legsFrame: this.player.legs.frame,
-      torsoFrame: this.player.torso.frame
+    if(this.spaceButton.isDown){
+      this.player.isFiring = true
+      this.weapon.fire()
+    }
+    else{
+      this.player.isFiring = false
     }
 
-    if(this.game.time.now > this.lastTimeSocketCaptured && 
-      !_.isEqual(this.playerLastPosition, currentPlayerPosition)){
-      this.lastTimeSocketCaptured = this.game.time.now + this.socketDelay
-      this.socket.emit('player.movement', currentPlayerPosition)
+    var currentPlayerStatus = this.player.getStatus()
+    if(!_.isEqual(this.currentPlayerStatus, currentPlayerStatus)){
+      this.currentPlayerStatus = currentPlayerStatus
+      this.socket.emit('player.movement', currentPlayerStatus)
     }
+  }
+
+  newShot(){
+    this.shootingSound.play()
   }
 
   playerCreated ({ player, enemies }){
@@ -82,6 +86,10 @@ export default class extends Phaser.State {
       asset: 'player',
       id: player.id
     })
+    this.hud.setName(this.player, player.id)
+    this.weapon = new Weapon(this.game, this.player.spriteToTrack(), 'bullet', 300)
+    this.weapon.onFire.add(this.newShot, this)
+
     _.forEach(enemies, (enemy) => this.createEnemy(enemy))
   }
 
@@ -93,28 +101,34 @@ export default class extends Phaser.State {
       asset: 'player',
       id: id
     }))
+    this.hud.setName(newEnemy, id)
     newEnemy.legs.angle = legsAngle
   }
 
-  updateEnemy ({ id, x, y, legsAngle, legsFrame, torsoFrame }){
-    let enemy = _.find(this.enemies.children, { id: id })
+  updateEnemy (player){
+    let enemy = _.find(this.enemies.children, { id: player.id })
     if(enemy){
-      enemy.x = x
-      enemy.y = y
-      enemy.legs.angle = legsAngle
-      enemy.legs.frame = legsFrame
-      enemy.torso.frame = torsoFrame
+      enemy.updateStatus(player)
     }
   }
 
-  destroyPlayer (){
-    this.player.destroy()
+  updateGame ({ players = [], bullets = [] }){
+    /**
+     * Update entities of the world
+     */
+    _.forEach(players , player => this.updateEnemy(player))
   }
 
-  destroyEnemy (playerId){
-    let enemy = _.find(this.enemies.children, { id: playerId })
-    if(enemy){
-      enemy.destroy()
+  destroyPlayer (playerId){
+    if(this.player.id === playerId){
+      this.player.destroy()
+      alert('The connection with the server was closed! :(')
+    }
+    else{
+      let enemy = _.find(this.enemies.children, { id: playerId })
+      if(enemy){
+        enemy.destroy()
+      }
     }
   }
 

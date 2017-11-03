@@ -1,27 +1,34 @@
 const _ = require('lodash')
 
 module.exports = class {
-    constructor (socket) {
+    constructor (socket, gameWorld) {
         this.socket = socket
+        this.gameWorld = gameWorld
+        this.currentPlayer = null
         socket.on('player.newPlayer', this.newPlayer.bind(this))
         socket.on('player.movement', this.movement.bind(this))
     }
 
     newPlayer (username) {
-        this.socket.player = {
+        this.currentPlayer = {
             id: this.socket.id,
             x: this.randomInt(100,400),
             y: 200,
             username: username
         }
+        this.gameWorld.players.push(this.currentPlayer)
     
         // Create the player in the game
         this.socket.emit('player.created', {
-            player: this.socket.player,
+            player: this.currentPlayer,
             enemies: this.getAllEnemies()
         })
         // Send the info of the new player to other gamers!
-        this.socket.broadcast.emit('player.enemyCreated', this.socket.player)
+        this.socket.broadcast.emit('player.enemyCreated', this.currentPlayer)
+    }
+
+    deletePlayer (){
+        _.remove(this.gameWorld.players, player => player.id === this.socket.id)
     }
 
     randomInt (low, high) {
@@ -29,20 +36,15 @@ module.exports = class {
     }
 
     movement ({ x, y, legsAngle, legsFrame, torsoFrame }) {
-        if(!this.socket.player) return
-        this.socket.player.x = x
-        this.socket.player.y = y
-        this.socket.player.legsAngle = legsAngle
-        this.socket.player.legsFrame = legsFrame
-        this.socket.player.torsoFrame = torsoFrame
-        this.socket.broadcast.emit('enemy.position', this.socket.player)
+        if(!this.currentPlayer) return
+        this.currentPlayer.x = x
+        this.currentPlayer.y = y
+        this.currentPlayer.legsAngle = legsAngle
+        this.currentPlayer.legsFrame = legsFrame
+        this.currentPlayer.torsoFrame = torsoFrame
     }
 
     getAllEnemies () {
-        var sockets = this.socket.server.sockets.connected
-        var enemies = _.map(_.pickBy(sockets, (socketEnemy, key) => {
-            return !!socketEnemy.player && key != this.socket.id
-        }), (socketEnemy) => socketEnemy.player)
-        return enemies
+        return _.filter(this.gameWorld.players, player => player.id !== this.socket.id)
     }
 }

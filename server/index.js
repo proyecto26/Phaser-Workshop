@@ -6,21 +6,31 @@
  * @version 1.0.0
  */
 
-var express = require('express')
-var app = express()
-var server = require('http').Server(app)
-var io = require('socket.io')(server)
-var Player = require('./socket/player')
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+const _ = require('lodash')
+const PlayerManager = require('./managers/player')
+const GameManager = require('./managers/game')
+
+var gameInterval = null
+const gameWorld = {
+  players: [],
+  bullets: [],
+  timeout: 200
+}
+var gameManager = new GameManager(io, gameWorld)
 
 io.on('connection', (socket) => {
-
-  const player = new Player(socket)
+  let playerManager = new PlayerManager(socket, gameWorld)
   socket.on('disconnect', () => {
-    socket.broadcast.emit('enemy.disconnect', socket.id)
-    socket.emit('player.disconnect')
+    playerManager.deletePlayer()
+    io.emit('player.disconnect', socket.id)
   })
 })
 
 server.listen(process.env.PORT || 8081, () => {
   console.log('Listening on '+server.address().port)
+  gameInterval = gameManager.createGameInterval()
 })

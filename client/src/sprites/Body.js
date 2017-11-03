@@ -29,25 +29,34 @@ export default class extends Phaser.Sprite {
     this.torso.anchor.setTo(0.5, 0.7)
     this.torso.frame = 2
     this.torso.animations.add('walk', Phaser.ArrayUtils.numberArray(2, 9), 16, true)
-    game.physics.arcade.enable(this.torso)
-
 
     this.body.setCircle(this.legs.height/4, -this.legs.width/10, -this.legs.height/10)
 
     this.legs.collideWorldBounds = true
     this.torso.collideWorldBounds = true
     this.body.collideWorldBounds = true
-    this.body.allowRotation = false
+    //this.body.allowRotation = false
+
+    this.isFiring = false
   }
 
   update(){
     this.torso.x = this.x
     this.torso.y = this.y
     this.torso.angle = this.legs.angle
+
+    if(this.isFiring){
+      this.torso.animations.stop()
+      this.torso.frame = 0
+    }
   }
 
   destroy(){
     this.torso.destroy()
     super.destroy()
+  }
+
+  spriteToTrack(){
+    return this.torso
   }
 }

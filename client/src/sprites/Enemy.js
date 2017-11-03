@@ -5,7 +5,6 @@ export default class extends Body {
   constructor ({ game, x, y, asset, id }) {
     super({ game, x, y, asset, id })
 
-    console.log(`EnemyId: ${id}`)
     /**
      * Prevent movement from collisions
      */
@@ -14,5 +13,13 @@ export default class extends Body {
      * Static objects like the walls
      */
     this.body.immovable = true
+  }
+
+  updateStatus({ id, x, y, legsAngle, legsFrame, torsoFrame }){
+    this.x = x
+    this.y = y
+    this.legs.angle = legsAngle
+    this.legs.frame = legsFrame
+    this.torso.frame = torsoFrame
   }
 }
