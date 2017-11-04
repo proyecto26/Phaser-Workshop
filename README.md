@@ -1,4 +1,4 @@
-# Phaser-Workshop
+# Phaser-Workshop with ES2015
 A workshop to create beautiful games with **Phaser Framework** 🎮 http://slides.com/juandavidnicholls/phaser-workshop#/
 
 ![Phaser Real-time games!](img/realtime-games.jpg)
