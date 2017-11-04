@@ -13,7 +13,7 @@ A workshop to create beautiful games with **Phaser Framework** 🎮 http://slide
 
 *Demo: https://proyecto26.github.io/phaser-real-time/*
 
-## Basic server update loops and client interaction
+## Basic server update loop and client interaction
 `git clone -b server-client https://github.com/proyecto26/Phaser-Workshop.git`
 
 ## Server client prediction
