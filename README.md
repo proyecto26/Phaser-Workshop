@@ -5,9 +5,11 @@ A workshop to create beautiful games with **Phaser Framework** 🎮 http://slide
 
 ## Paht Finding and Isometric worls
 `git clone -b isometric https://github.com/proyecto26/Phaser-Workshop.git`
+*Demo: https://mmermerkaya.github.io/phaser-isometric-demo/*
 
 ## Basic client server interaction
 `git clone -b client-server https://github.com/proyecto26/Phaser-Workshop.git`
+*Demo: https://proyecto26.github.io/phaser-real-time/*
 
 ## Basic server update loops and client interaction
 `git clone -b server-client https://github.com/proyecto26/Phaser-Workshop.git`
@@ -16,7 +18,7 @@ A workshop to create beautiful games with **Phaser Framework** 🎮 http://slide
 `SOON`
 
 ## Preparation
-- [Hello world, the Phaser basics!](http://slides.com/juandavidnicholls/phaser/)
+- [Hello world, the Phaser introduction!](http://slides.com/juandavidnicholls/phaser/)
 - [Node.js basics](http://slides.com/juandavidnicholls/node-js#/)
 - [Phaser Webpack template](https://github.com/lean/phaser-es6-webpack)
 
