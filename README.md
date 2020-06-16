@@ -1,5 +1,5 @@
 # Phaser CE Workshop using ES6
-A workshop to create beautiful games with **Phaser Framework** 🎮 
+A workshop to create awesome games with **Phaser Framework** 🎮 
 
 Demo: https://proyecto26.com/phaser-real-time
 
